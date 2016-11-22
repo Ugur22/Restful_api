@@ -29,11 +29,19 @@ var quoteController = function (Quote) {
         if (req.query.genre) {
             query.genre = req.query.genre;
         }
-        Quote.find(query, function (err, quote) {
+        Quote.find(query, function (err, quotes) {
             if (err) {
                 res.status(500).send(err);
             } else {
-                res.json(quote);
+
+                var returnQuotes = [];
+                quotes.forEach(function (element, index, array) {
+                    var newQuote = element.toJSON();
+                    newQuote.links = {};
+                    newQuote.links.self = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
+                    returnQuotes.push(newQuote);
+                });
+                res.json(returnQuotes);
             }
         });
     };

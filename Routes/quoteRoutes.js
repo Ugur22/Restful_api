@@ -23,7 +23,11 @@ var routes = function (Quote) {
     });
     quoteRouter.route('/:quoteId')
         .get(function (req, res) {
-            res.json(req.quote);
+            var returnQuote = req.quote.toJSON();
+            returnQuote.links = {};
+            var newLink = 'http://' + req.headers.host + '/api/quotes/?tag=' + returnQuote.tag;
+            returnQuote.links.filterByThisTag = newLink.replace(' ', '%20');
+            res.json(returnQuote);
         })
         .put(function (req, res) {
             req.quote.title = req.body.title;
