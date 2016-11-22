@@ -33,7 +33,6 @@ var routes = function (Quote) {
             req.quote.title = req.body.title;
             req.quote.author = req.body.author;
             req.quote.genre = req.body.genre;
-            req.quote.read = req.body.read;
             req.quote.save(function (err) {
                 if (err) {
                     res.status(500).send(err);

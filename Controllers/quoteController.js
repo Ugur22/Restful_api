@@ -4,7 +4,7 @@ var quoteController = function (Quote) {
 
         if (!req.body.text) {
             res.status(400);
-            res.send('Title is required');
+            res.send('text is required');
         }
         else if (!req.body.author) {
             res.status(400);
@@ -38,7 +38,7 @@ var quoteController = function (Quote) {
                 quotes.forEach(function (element, index, array) {
                     var newQuote = element.toJSON();
                     newQuote.links = {};
-                    newQuote.links.self = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
+                    newQuote.links._self = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
                     returnQuotes.push(newQuote);
                 });
                 res.json(returnQuotes);

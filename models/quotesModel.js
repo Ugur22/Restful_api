@@ -10,9 +10,6 @@ var bookModel = new Schema({
     },
     tag: {
         type: String
-    },
-    read: {
-        type: Boolean, default: false
     }
 });
 
