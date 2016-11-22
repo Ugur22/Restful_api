@@ -3,26 +3,10 @@ var express = require('express');
 var routes = function (Quote) {
     var quoteRouter = express.Router();
 
+    var quoteController = require('../Controllers/quoteController.js')(Quote);
     quoteRouter.route('/')
-        .post(function (req, res) {
-            var quote = new Quote(req.body);
-            quote.save();
-            console.log(quote);
-            res.status(201).send(quote);
-        })
-        .get(function (req, res) {
-            var query = {};
-            if (req.query.genre) {
-                query.genre = req.query.genre;
-            }
-            Quote.find(query, function (err, quote) {
-                if (err) {
-                    res.status(500).send(err);
-                } else {
-                    res.json(quote);
-                }
-            });
-        });
+        .post(quoteController.post)
+        .get(quoteController.get);
 
     quoteRouter.use('/:quoteId', function (req, res, next) {
         Quote.findById(req.params.quoteId, function (err, quote) {
