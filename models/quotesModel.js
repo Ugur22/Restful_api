@@ -2,13 +2,13 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var bookModel = new Schema({
-    title: {
+    text: {
         type: String
     },
     author: {
         type: String
     },
-    genre: {
+    tag: {
         type: String
     },
     read: {
@@ -16,6 +16,6 @@ var bookModel = new Schema({
     }
 });
 
-module.exports = mongoose.model('Books', bookModel);
+module.exports = mongoose.model('Quotes', bookModel);
 
 

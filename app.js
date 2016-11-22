@@ -3,9 +3,9 @@ var express = require('express'),
     bodyParser = require('body-parser');
 
 
-var db = mongoose.connect('mongodb://localhost:27017/bookAPI');
+var db = mongoose.connect('mongodb://localhost:27017/quoteAPI');
 
-var Book = require('./models/bookModel');
+var Book = require('./models/quotesModel');
 
 
 var app = express();
@@ -15,10 +15,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-bookRouter = require("./Routes/bookRoutes")(Book);
+bookRouter = require("./Routes/quoteRoutes")(Book);
 
 
-app.use('/api/books', bookRouter);
+app.use('/api/quotes', bookRouter);
 // app.use('/api/authors', authorRouter);
 
 app.get('/', function (req, res) {
