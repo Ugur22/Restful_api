@@ -34,11 +34,11 @@ var quoteController = function (Quote) {
                 res.status(500).send(err);
             } else {
 
-                var returnQuotes = [];
+                var returnQuotes = ['Quotes'];
                 quotes.forEach(function (element, index, array) {
                     var newQuote = element.toJSON();
-                    newQuote.links = {};
-                    newQuote.links._self = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
+                    newQuote._links = {};
+                    newQuote._links._self = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
                     returnQuotes.push(newQuote);
                 });
                 res.json(returnQuotes);
