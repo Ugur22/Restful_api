@@ -36,7 +36,7 @@ var quoteController = function (Quote) {
 
                 var returnQuotes = {};
                 var key = 'items';
-                returnQuotes[key] = []; // empty Array, which you can push() values into
+                returnQuotes[key] = [];
                 quotes.forEach(function (element, index, array) {
                     var newQuote = element.toJSON();
                     newQuote._links = {};
