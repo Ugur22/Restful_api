@@ -8,6 +8,11 @@ var routes = function (Quote) {
         .post(quoteController.post)
         .get(quoteController.get);
 
+    quoteRouter.route('/api/quotes')
+        .delete(function (req, res) {
+            res.status(500).send('Method not allowed');
+        });
+
     quoteRouter.use('/:quoteId', function (req, res, next) {
         Quote.findById(req.params.quoteId, function (err, quote) {
             if (err) {
@@ -21,6 +26,8 @@ var routes = function (Quote) {
             }
         });
     });
+
+
     quoteRouter.route('/:quoteId')
         .get(function (req, res) {
             var returnQuote = req.quote.toJSON();
