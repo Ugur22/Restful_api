@@ -34,7 +34,9 @@ var quoteController = function (Quote) {
                 res.status(500).send(err);
             } else {
 
-                var returnQuotes = ['items'];
+                var returnQuotes = {};
+                var key = 'items';
+                returnQuotes[key] = []; // empty Array, which you can push() values into
                 quotes.forEach(function (element, index, array) {
                     var newQuote = element.toJSON();
                     newQuote._links = {};
@@ -42,7 +44,7 @@ var quoteController = function (Quote) {
                     newQuote._links.collection = {};
                     newQuote._links.self.href = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
                     newQuote._links.collection.href = 'http://' + req.headers.host + '/api/quotes/';
-                    returnQuotes.push(newQuote);
+                    returnQuotes[key].push(newQuote);
                 });
                 res.json(returnQuotes);
             }
