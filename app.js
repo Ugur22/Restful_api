@@ -18,14 +18,17 @@ app.use(bodyParser.urlencoded({extended: true}));
 quoteRouter = require("./Routes/quoteRoutes")(Quote);
 
 
-app.use('/api/quotes', quoteRouter);
+app.use('/api/quotes', quoteRouter, function () {
+
+});
 // app.use('/api/authors', authorRouter);
 
 app.get('/', function (req, res) {
-    res.send('welcome to my Restful WEB API');
+
 });
 
-app.listen(port, function () {
+app.listen(port, function (req, res) {
+
     console.log('running on Port:' + port);
 });
 

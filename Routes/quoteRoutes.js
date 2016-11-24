@@ -67,6 +67,10 @@ var routes = function (Quote) {
                     res.status(204).send('Removed');
                 }
             });
+        })
+        .options(function (req, res) {
+            res.set('Allow', "POST,GET,OPTIONS");
+            res.end();
         });
     return quoteRouter;
 };
