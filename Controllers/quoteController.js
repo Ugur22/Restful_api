@@ -34,11 +34,14 @@ var quoteController = function (Quote) {
                 res.status(500).send(err);
             } else {
 
-                var returnQuotes = ['Quotes'];
+                var returnQuotes = ['items'];
                 quotes.forEach(function (element, index, array) {
                     var newQuote = element.toJSON();
                     newQuote._links = {};
-                    newQuote._links._self = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
+                    newQuote._links.self = {};
+                    newQuote._links.collection = {};
+                    newQuote._links.self.href = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
+                    newQuote._links.collection.href = 'http://' + req.headers.host + '/api/quotes/';
                     returnQuotes.push(newQuote);
                 });
                 res.json(returnQuotes);
