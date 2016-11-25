@@ -18,9 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 quoteRouter = require("./Routes/quoteRoutes")(Quote);
 
 
-app.use('/api/quotes', quoteRouter, function () {
-
-});
+app.use('/api/quotes', quoteRouter);
 // app.use('/api/authors', authorRouter);
 
 app.get('/', function (req, res) {
