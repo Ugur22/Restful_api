@@ -24,7 +24,7 @@ app.use('/api/quotes', quoteRouter, function () {
 // app.use('/api/authors', authorRouter);
 
 app.get('/', function (req, res) {
-
+    res.send('My  quotes API');
 });
 
 app.listen(port, function (req, res) {
