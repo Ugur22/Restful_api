@@ -29,24 +29,47 @@ var quoteController = function (Quote) {
         if (req.query.genre) {
             query.genre = req.query.genre;
         }
-        Quote.find(query, function (err, quotes) {
+        Quote.find(query, function (err, ItemQuotes) {
             if (err) {
                 res.status(500).send(err);
             } else {
 
-                var returnQuotes = {};
-                var key = 'items';
-                returnQuotes[key] = [];
-                quotes.forEach(function (element, index, array) {
+                var quotes = quotes = {};
+                var items = quotes.items = {};
+                var item = items.item = [];
+
+                var links = items._links = {};
+                links.self = {};
+                links.self.href = 'http://' + req.headers.host + '/api/quotes/';
+                var pagination = items.pagination = {};
+                pagination.currentPage = 1;
+                pagination.currentItems = 5;
+                pagination.totalItems = 5;
+                var paginationLinks = pagination._links = {};
+                paginationLinks.first = {};
+                paginationLinks.first.page = 1;
+                paginationLinks.first.href = 'http://' + req.headers.host + '/api/quotes/';
+                paginationLinks.last = {};
+                paginationLinks.last.page = 1;
+                paginationLinks.last.href = 'http://' + req.headers.host + '/api/quotes/';
+                paginationLinks.previous = {};
+                paginationLinks.previous.page = 1;
+                paginationLinks.previous.href = 'http://' + req.headers.host + '/api/quotes/';
+                paginationLinks.next = {};
+                paginationLinks.next.page = 1;
+                paginationLinks.next.href = 'http://' + req.headers.host + '/api/quotes/';
+
+
+                ItemQuotes.forEach(function (element, index, array) {
                     var newQuote = element.toJSON();
-                    newQuote._links = {};
-                    newQuote._links.self = {};
-                    newQuote._links.collection = {};
-                    newQuote._links.self.href = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
-                    newQuote._links.collection.href = 'http://' + req.headers.host + '/api/quotes/';
-                    returnQuotes[key].push(newQuote);
+                    var linksQuote = newQuote._links = {};
+                    linksQuote.self = {};
+                    linksQuote.collection = {};
+                    linksQuote.self.href = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
+                    linksQuote.collection.href = 'http://' + req.headers.host + '/api/quotes/';
+                    item.push(newQuote);
                 });
-                res.json(returnQuotes);
+                res.json(quotes);
             }
         });
     };
