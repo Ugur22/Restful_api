@@ -38,10 +38,10 @@ var quoteController = function (Quote) {
                 var items = quotes.items = {};
                 var item = items.item = [];
 
-                var links = items._links = {};
+                var links = quotes._links = {};
                 links.self = {};
                 links.self.href = 'http://' + req.headers.host + '/api/quotes/';
-                var pagination = items.pagination = {};
+                var pagination = quotes.pagination = {};
                 pagination.currentPage = 1;
                 pagination.currentItems = 5;
                 pagination.totalItems = 5;
