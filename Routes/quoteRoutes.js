@@ -13,7 +13,7 @@ var routes = function (Quote) {
             res.status(500).send('Method not allowed');
         })
         .options(function (req, res) {
-            res.set('Access-Control-Allow-Methods', 'Allow', 'GET, POST, OPTIONS');
+            res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
             res.end();
         });
 
