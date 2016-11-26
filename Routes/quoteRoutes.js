@@ -13,12 +13,13 @@ var routes = function (Quote) {
             res.status(500).send('Method not allowed');
         })
         .options(function (req, res) {
-            res.set('Allow', "POST,GET,OPTIONS");
+            res.set('Access-Control-Allow-Methods', 'Allow', 'GET, POST, OPTIONS');
             res.end();
         });
 
     quoteRouter.use('/:quoteId', function (req, res, next) {
-        Quote.findById(req.params.quoteId, function (err, quote) {
+        var exclude = {__v: 0};
+        Quote.findById(req.params.quoteId, exclude, function (err, quote) {
             if (err) {
                 res.status(500).send(err);
             } else if (quote) {
@@ -35,9 +36,9 @@ var routes = function (Quote) {
     quoteRouter.route('/:quoteId')
         .get(function (req, res) {
             var returnQuote = req.quote.toJSON();
-            returnQuote.links = {};
-            var newLink = 'http://' + req.headers.host + '/api/quotes/?tag=' + returnQuote.tag;
-            returnQuote.links.filterByThisTag = newLink.replace(' ', '%20');
+            returnQuote._links = {};
+            returnQuote._links.self = {};
+            returnQuote._links.self.href = 'http://' + req.headers.host + '/api/quotes/' + returnQuote._id;
             res.json(returnQuote);
         })
         .put(function (req, res) {
