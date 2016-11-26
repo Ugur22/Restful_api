@@ -18,8 +18,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 quoteRouter = require("./Routes/quoteRoutes")(Quote);
 
 
-app.use('/api/quotes', quoteRouter);
-// app.use('/api/authors', authorRouter);
+app.use('/api/quotes', quoteRouter)
+    .options(function (req, res, next) {
+        res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+        next();
+    });
 
 app.get('/', function (req, res) {
     res.send('My  quotes API');

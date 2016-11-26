@@ -8,14 +8,6 @@ var routes = function (Quote) {
         .post(quoteController.post)
         .get(quoteController.get);
 
-    quoteRouter.route('/api/quotes')
-        .delete(function (req, res) {
-            res.status(500).send('Method not allowed');
-        })
-        .options(function (req, res) {
-            res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-            res.end();
-        });
 
     quoteRouter.use('/:quoteId', function (req, res, next) {
         var exclude = {__v: 0};
