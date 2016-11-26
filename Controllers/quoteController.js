@@ -24,12 +24,13 @@ var quoteController = function (Quote) {
 
     };
 
+
     var get = function (req, res) {
-        var query = {};
+        var exclude = {__v: 0};
         if (req.query.genre) {
             query.genre = req.query.genre;
         }
-        Quote.find(query, function (err, ItemQuotes) {
+        Quote.find({}, exclude, function (err, ItemQuotes) {
             if (err) {
                 res.status(500).send(err);
             } else {

@@ -15,21 +15,6 @@ var routes = function (Quote) {
         .options(function (req, res) {
             res.set('Allow', "POST,GET,OPTIONS");
             res.end();
-        })
-        .get(function (req, res) {
-            res.format({
-                'text/plain': function () {
-                    res.status(406).send('Not Acceptable');
-                },
-
-                'text/html': function () {
-                    res.status(406).send('Not Acceptable');
-                },
-
-                'application/json': function () {
-                    res.send({message: 'correct '});
-                },
-            });
         });
 
     quoteRouter.use('/:quoteId', function (req, res, next) {
