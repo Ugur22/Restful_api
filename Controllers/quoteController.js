@@ -26,7 +26,7 @@ var quoteController = function (Quote) {
 
 
     var get = function (req, res) {
-        var exclude = {__v: 0, _id: 0};
+        var exclude = {__v: 0};
         if (req.query.genre) {
             query.genre = req.query.genre;
         }

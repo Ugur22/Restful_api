@@ -44,7 +44,6 @@ var routes = function (Quote) {
                     res.json(req.quote);
                 }
             });
-            res.json(req.quote);
         })
 
         .patch(function (req, res) {
