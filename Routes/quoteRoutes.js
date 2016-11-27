@@ -36,9 +36,9 @@ var routes = function (Quote) {
             res.json(returnQuote);
         })
         .put(function (req, res) {
-            req.quote.title = req.body.title;
+            req.quote.text = req.body.text;
             req.quote.author = req.body.author;
-            req.quote.genre = req.body.genre;
+            req.quote.tag = req.body.tag;
             req.quote.save(function (err) {
                 if (err) {
                     res.status(500).send(err);
@@ -47,7 +47,6 @@ var routes = function (Quote) {
                 }
             });
         })
-
         .patch(function (req, res) {
             if (req.body._id) {
                 delete req.body._id;
