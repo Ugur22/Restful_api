@@ -17,7 +17,6 @@ var quoteController = function (Quote) {
         }
         else {
             quote.save();
-            res.json(quote);
             console.log(quote);
             res.status(201).send(quote);
         }
@@ -59,6 +58,8 @@ var quoteController = function (Quote) {
                 paginationLinks.next = {};
                 paginationLinks.next.page = 1;
                 paginationLinks.next.href = 'http://' + req.headers.host + '/api/quotes/';
+
+
                 ItemQuotes.forEach(function (element, index, array) {
                     var newQuote = element.toJSON();
                     var linksQuote = newQuote._links = {};
