@@ -35,7 +35,7 @@ var quoteController = function (Quote) {
                 res.status(500).send(err);
             } else {
 
-                var quotes = quotes = {};
+                var quotes = {};
                 var items = quotes.items = [];
 
                 var links = quotes._links = {};
