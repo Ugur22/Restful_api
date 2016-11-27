@@ -36,8 +36,7 @@ var quoteController = function (Quote) {
             } else {
 
                 var quotes = quotes = {};
-                var items = quotes.items = {};
-                var item = items.item = [];
+                var items = quotes.items = [];
 
                 var links = quotes._links = {};
                 links.self = {};
@@ -68,7 +67,7 @@ var quoteController = function (Quote) {
                     linksQuote.collection = {};
                     linksQuote.self.href = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
                     linksQuote.collection.href = 'http://' + req.headers.host + '/api/quotes/';
-                    item.push(newQuote);
+                    items.push(newQuote);
                 });
                 res.json(quotes);
             }
