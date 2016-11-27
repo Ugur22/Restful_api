@@ -1,12 +1,12 @@
 var express = require('express');
-
 var routes = function (Quote) {
     var quoteRouter = express.Router();
 
     var quoteController = require('../Controllers/quoteController.js')(Quote);
     quoteRouter.route('/')
         .post(quoteController.post)
-        .get(quoteController.get);
+        .get(quoteController.get)
+        .options(quoteController.options);
 
 
     quoteRouter.use('/:quoteId', function (req, res, next) {
@@ -24,7 +24,6 @@ var routes = function (Quote) {
         });
     });
 
-
     quoteRouter.route('/:quoteId')
         .get(function (req, res) {
             var returnQuote = req.quote.toJSON();
@@ -34,6 +33,10 @@ var routes = function (Quote) {
             returnQuote._links.collection = {};
             returnQuote._links.collection.href = 'http://' + req.headers.host + '/api/quotes/';
             res.json(returnQuote);
+        })
+        .options(function (req, res) {
+            res.header('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
+            res.end();
         })
         .put(function (req, res) {
             req.quote.text = req.body.text;
@@ -88,7 +91,7 @@ var routes = function (Quote) {
                     res.status(204).send('Removed');
                 }
             });
-        })
+        });
     return quoteRouter;
 };
 

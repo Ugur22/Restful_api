@@ -24,7 +24,10 @@ var quoteController = function (Quote) {
 
     };
 
-
+    var options = function (req, res) {
+        res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+        res.end();
+    };
     var get = function (req, res) {
         var exclude = {__v: 0};
         if (req.query.genre) {
@@ -76,7 +79,8 @@ var quoteController = function (Quote) {
 
     return {
         post: post,
-        get: get
+        get: get,
+        options: options
     }
 };
 
