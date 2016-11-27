@@ -39,13 +39,30 @@ var routes = function (Quote) {
             req.quote.text = req.body.text;
             req.quote.author = req.body.author;
             req.quote.tag = req.body.tag;
-            req.quote.save(function (err) {
-                if (err) {
-                    res.status(500).send(err);
-                } else {
-                    res.json(req.quote);
-                }
-            });
+
+            if (!req.body.text) {
+                res.status(400);
+                res.send('text is required');
+            }
+            else if (!req.body.author) {
+                res.status(400);
+                res.send('author is required');
+            }
+
+            else if (!req.body.tag) {
+                res.status(400);
+                res.send('tag is required');
+            }
+            else {
+                req.quote.save(function (err) {
+                    if (err) {
+                        res.status(500).send(err);
+                    } else {
+                        res.json(req.quote);
+                    }
+                });
+            }
+
         })
         .patch(function (req, res) {
             if (req.body._id) {
