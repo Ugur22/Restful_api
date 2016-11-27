@@ -30,7 +30,7 @@ var routes = function (Quote) {
             var returnQuote = req.quote.toJSON();
             returnQuote._links = {};
             returnQuote._links.self = {};
-            returnQuote._links.self.href = 'http://' + req.headers.host + '/api/quotes/' + returnQuote._id;
+            returnQuote._links.self.href = 'http://' + req.headers.host + '/api/quotes/';
             res.json(returnQuote);
         })
         .put(function (req, res) {
