@@ -1,4 +1,3 @@
-var mongoosePaginate = require('mongoose-paginate');
 var quoteController = function (Quote) {
     var post = function (req, res) {
         var quote = new Quote(req.body);
