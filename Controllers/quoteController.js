@@ -35,43 +35,45 @@ var quoteController = function (Quote) {
                 res.status(500).send(err);
             } else {
 
+                if (!req.accepts('json')) {
+                    res.status(404).send(err)
+                } else {
+                    var quotes = {};
+                    var items = quotes.items = [];
 
-                var quotes = {};
-                var items = quotes.items = [];
-
-                var links = quotes._links = {};
-                links.self = {};
-                links.self.href = 'http://' + req.headers.host + '/api/quotes/';
-                var pagination = quotes.pagination = {};
-                pagination.currentPage = 1;
-                pagination.currentItems = 5;
-                pagination.totalItems = 5;
-                var paginationLinks = pagination._links = {};
-                paginationLinks.first = {};
-                paginationLinks.first.page = 1;
-                paginationLinks.first.href = 'http://' + req.headers.host + '/api/quotes/';
-                paginationLinks.last = {};
-                paginationLinks.last.page = 1;
-                paginationLinks.last.href = 'http://' + req.headers.host + '/api/quotes/';
-                paginationLinks.previous = {};
-                paginationLinks.previous.page = 1;
-                paginationLinks.previous.href = 'http://' + req.headers.host + '/api/quotes/';
-                paginationLinks.next = {};
-                paginationLinks.next.page = 1;
-                paginationLinks.next.href = 'http://' + req.headers.host + '/api/quotes/';
+                    var links = quotes._links = {};
+                    links.self = {};
+                    links.self.href = 'http://' + req.headers.host + '/api/quotes/';
+                    var pagination = quotes.pagination = {};
+                    pagination.currentPage = 1;
+                    pagination.currentItems = 5;
+                    pagination.totalItems = 5;
+                    var paginationLinks = pagination._links = {};
+                    paginationLinks.first = {};
+                    paginationLinks.first.page = 1;
+                    paginationLinks.first.href = 'http://' + req.headers.host + '/api/quotes/';
+                    paginationLinks.last = {};
+                    paginationLinks.last.page = 1;
+                    paginationLinks.last.href = 'http://' + req.headers.host + '/api/quotes/';
+                    paginationLinks.previous = {};
+                    paginationLinks.previous.page = 1;
+                    paginationLinks.previous.href = 'http://' + req.headers.host + '/api/quotes/';
+                    paginationLinks.next = {};
+                    paginationLinks.next.page = 1;
+                    paginationLinks.next.href = 'http://' + req.headers.host + '/api/quotes/';
 
 
-                ItemQuotes.forEach(function (element, index, array) {
-                    var newQuote = element.toJSON();
-                    var linksQuote = newQuote._links = {};
-                    linksQuote.self = {};
-                    linksQuote.collection = {};
-                    linksQuote.self.href = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
-                    linksQuote.collection.href = 'http://' + req.headers.host + '/api/quotes/';
-                    items.push(newQuote);
-                });
-                res.json(quotes);
-
+                    ItemQuotes.forEach(function (element, index, array) {
+                        var newQuote = element.toJSON();
+                        var linksQuote = newQuote._links = {};
+                        linksQuote.self = {};
+                        linksQuote.collection = {};
+                        linksQuote.self.href = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
+                        linksQuote.collection.href = 'http://' + req.headers.host + '/api/quotes/';
+                        items.push(newQuote);
+                    });
+                    res.json(quotes);
+                }
             }
         });
     };
