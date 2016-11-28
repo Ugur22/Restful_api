@@ -38,6 +38,8 @@ var quoteController = function (Quote) {
                 res.status(500).send(err);
             } else {
 
+
+
                 var quotes = {};
                 var items = quotes.items = [];
 
@@ -72,7 +74,13 @@ var quoteController = function (Quote) {
                     linksQuote.collection.href = 'http://' + req.headers.host + '/api/quotes/';
                     items.push(newQuote);
                 });
-                res.json(quotes);
+
+                if (req.accepts('json')) {
+                    res.json(quotes);
+                }else {
+                    res.send('');
+                }
+
             }
         });
     };
