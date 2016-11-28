@@ -21,13 +21,20 @@ quoteRouter = require("./Routes/quoteRoutes")(Quote);
 app.use('/api/quotes', quoteRouter);
 
 
+app.use(function (req, res) {
+    if (req.accepts('json')) {
+        res.send(' accepted');
+
+    } else {
+        res.send('not accepted');
+    }
+});
 
 app.get('/', function (req, res) {
     res.send('My  quotes API');
 });
 
 app.listen(port, function (req, res) {
-
     console.log('running on Port:' + port);
 });
 

@@ -1,5 +1,6 @@
 var express = require('express');
 var routes = function (Quote) {
+
     var quoteRouter = express.Router();
 
     var quoteController = require('../Controllers/quoteController.js')(Quote);
