@@ -55,10 +55,6 @@ var quoteController = function (Quote) {
 
                         var totalPages = Math.ceil(countItems / limit);
 
-                        // pagination
-                        // page numbers
-                        // var nextPage = (page < totalPages) ? page + 1 : page
-                        // var prevPage = (page > 1) ? page - 1 : page
 
                     }
 
@@ -84,7 +80,7 @@ var quoteController = function (Quote) {
                             paginationLinks.first.page = 1;
                             paginationLinks.first.href = 'http://' + req.headers.host + '/api/quotes/';
                             paginationLinks.last = {};
-                            paginationLinks.last.page = 1;
+                            paginationLinks.last.page = totalPages;
                             paginationLinks.last.href = 'http://' + req.headers.host + '/api/quotes/';
                             paginationLinks.previous = {};
                             paginationLinks.previous.page = 1;
