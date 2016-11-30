@@ -78,10 +78,10 @@ var quoteController = function (Quote) {
                             var paginationLinks = pagination._links = {};
                             paginationLinks.first = {};
                             paginationLinks.first.page = 1;
-                            paginationLinks.first.href = 'http://' + req.headers.host + '/api/quotes/';
+                            paginationLinks.first.href = 'http://' + req.headers.host + '/api/quotes/?' + 'start=' + 1 + '&limit=' + limit;
                             paginationLinks.last = {};
                             paginationLinks.last.page = totalPages;
-                            paginationLinks.last.href = 'http://' + req.headers.host + '/api/quotes/';
+                            paginationLinks.last.href = 'http://' + req.headers.host + '/api/quotes/?';
                             paginationLinks.previous = {};
                             paginationLinks.previous.page = 1;
                             paginationLinks.previous.href = 'http://' + req.headers.host + '/api/quotes/';
