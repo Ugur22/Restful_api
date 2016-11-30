@@ -1,4 +1,7 @@
+require('mongoose-pagination');
 var quoteController = function (Quote) {
+
+
     var post = function (req, res) {
         var quote = new Quote(req.body);
 
@@ -28,53 +31,82 @@ var quoteController = function (Quote) {
         res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
         res.end();
     };
-    var get = function (req, res) {
-        var exclude = {__v: 0};
-        Quote.find(null, exclude, function (err, ItemQuotes) {
-            if (err) {
-                res.status(500).send(err);
-            } else {
-
-                if (!req.accepts('json')) {
-                    res.status(404).send(err)
-                } else {
-                    var quotes = {};
-                    var items = quotes.items = [];
-
-                    var links = quotes._links = {};
-                    links.self = {};
-                    links.self.href = 'http://' + req.headers.host + '/api/quotes/';
-                    var pagination = quotes.pagination = {};
-                    pagination.currentPage = 1;
-                    pagination.currentItems = 5;
-                    pagination.totalItems = 5;
-                    var paginationLinks = pagination._links = {};
-                    paginationLinks.first = {};
-                    paginationLinks.first.page = 1;
-                    paginationLinks.first.href = 'http://' + req.headers.host + '/api/quotes/';
-                    paginationLinks.last = {};
-                    paginationLinks.last.page = 1;
-                    paginationLinks.last.href = 'http://' + req.headers.host + '/api/quotes/';
-                    paginationLinks.previous = {};
-                    paginationLinks.previous.page = 1;
-                    paginationLinks.previous.href = 'http://' + req.headers.host + '/api/quotes/';
-                    paginationLinks.next = {};
-                    paginationLinks.next.page = 1;
-                    paginationLinks.next.href = 'http://' + req.headers.host + '/api/quotes/';
+    var get = function (req, res, next) {
+        var page = parseInt(req.query.start) || 1;
+        Quote.find().exec((err, countData) => {
+            if (err) return next(err);
+            var countItems = countData.length;
+            // pagination
+            var limit = parseInt(req.query.limit) || countItems;
 
 
-                    ItemQuotes.forEach(function (element, index, array) {
-                        var newQuote = element.toJSON();
-                        var linksQuote = newQuote._links = {};
-                        linksQuote.self = {};
-                        linksQuote.collection = {};
-                        linksQuote.self.href = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
-                        linksQuote.collection.href = 'http://' + req.headers.host + '/api/quotes/';
-                        items.push(newQuote);
-                    });
-                    res.json(quotes);
-                }
-            }
+            var quotes = {};
+
+            var exclude = {__v: 0};
+            Quote.find({}, exclude)
+                .paginate(page, limit)
+                .exec((err, data) => {
+                    if (err) {
+                        return next(err)
+                    } else {
+                        if (limit > countItems)
+                            limit = countItems;
+
+
+                        var totalPages = Math.ceil(countItems / limit);
+
+                        // pagination
+                        // page numbers
+                        var nextPage = (page < totalPages) ? page + 1 : page
+                        var prevPage = (page > 1) ? page - 1 : page
+
+                    }
+
+                    if (err) {
+                        res.status(500).send(err);
+                    } else {
+                        if (!req.accepts('json')) {
+                            res.status(404).send(err)
+                        } else {
+
+                            var items = quotes.items = [];
+
+                            var links = quotes._links = {};
+                            links.self = {};
+                            links.self.href = 'http://' + req.headers.host + '/api/quotes/';
+                            var pagination = quotes.pagination = {};
+                            pagination.currentPage = page;
+                            pagination.currentItems = limit;
+                            pagination.totalPages = totalPages;
+                            pagination.totalItems = countItems;
+                            var paginationLinks = pagination._links = {};
+                            paginationLinks.first = {};
+                            paginationLinks.first.page = 1;
+                            paginationLinks.first.href = 'http://' + req.headers.host + '/api/quotes/';
+                            paginationLinks.last = {};
+                            paginationLinks.last.page = 1;
+                            paginationLinks.last.href = 'http://' + req.headers.host + '/api/quotes/';
+                            paginationLinks.previous = {};
+                            paginationLinks.previous.page = 1;
+                            paginationLinks.previous.href = 'http://' + req.headers.host + '/api/quotes/';
+                            paginationLinks.next = {};
+                            paginationLinks.next.page = 1;
+                            paginationLinks.next.href = 'http://' + req.headers.host + '/api/quotes/';
+
+
+                            data.forEach(function (element, index, array) {
+                                var newQuote = element.toJSON();
+                                var linksQuote = newQuote._links = {};
+                                linksQuote.self = {};
+                                linksQuote.collection = {};
+                                linksQuote.self.href = 'http://' + req.headers.host + '/api/quotes/' + newQuote._id;
+                                linksQuote.collection.href = 'http://' + req.headers.host + '/api/quotes/';
+                                items.push(newQuote);
+                            });
+                            res.json(quotes);
+                        }
+                    }
+                });
         });
     };
 
