@@ -1,6 +1,6 @@
 require('mongoose-pagination');
 var quoteController = function (Quote) {
-
+    var newPageNext, newPagePrev;
 
     var post = function (req, res) {
         var quote = new Quote(req.body);
@@ -52,10 +52,7 @@ var quoteController = function (Quote) {
                         if (limit > countItems)
                             limit = countItems;
 
-
                         var totalPages = Math.ceil(countItems / limit);
-
-
                     }
 
                     if (err) {
@@ -64,6 +61,18 @@ var quoteController = function (Quote) {
                         if (!req.accepts('json')) {
                             res.status(404).send(err)
                         } else {
+
+
+                            if (page > totalPages) {
+                                newPageNext = totalPages;
+                            } else
+                                newPageNext = page + 1;
+
+                            if (page < 1) {
+                                newPagePrev = 1;
+                            } else
+                                newPagePrev = page - 1;
+
 
                             var items = quotes.items = [];
 
@@ -83,11 +92,11 @@ var quoteController = function (Quote) {
                             paginationLinks.last.page = totalPages;
                             paginationLinks.last.href = 'http://' + req.headers.host + '/api/quotes/?' + 'start=' + totalPages + '&limit=' + limit;
                             paginationLinks.previous = {};
-                            paginationLinks.previous.page = 1;
-                            paginationLinks.previous.href = 'http://' + req.headers.host + '/api/quotes/';
+                            paginationLinks.previous.page = newPagePrev;
+                            paginationLinks.previous.href = 'http://' + req.headers.host + '/api/quotes/?' + 'start=' + newPagePrev + '&limit=' + limit;
                             paginationLinks.next = {};
-                            paginationLinks.next.page = 1;
-                            paginationLinks.next.href = 'http://' + req.headers.host + '/api/quotes/';
+                            paginationLinks.next.page = newPageNext;
+                            paginationLinks.next.href = 'http://' + req.headers.host + '/api/quotes/?' + 'start=' + newPageNext + '&limit=' + limit;
 
 
                             data.forEach(function (element, index, array) {
