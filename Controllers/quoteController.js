@@ -57,8 +57,8 @@ var quoteController = function (Quote) {
 
                         // pagination
                         // page numbers
-                        var nextPage = (page < totalPages) ? page + 1 : page
-                        var prevPage = (page > 1) ? page - 1 : page
+                        // var nextPage = (page < totalPages) ? page + 1 : page
+                        // var prevPage = (page > 1) ? page - 1 : page
 
                     }
 
