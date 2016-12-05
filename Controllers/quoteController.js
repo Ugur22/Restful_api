@@ -63,9 +63,15 @@ var quoteController = function (Quote) {
                         } else {
 
 
+                            if (totalPages <= 1) {
+                                newPagePrev = 1;
+                                newPageNext = 1;
+                            }
+
                             if (page < totalPages) {
                                 newPageNext = page + 1;
                             }
+
 
                             if (page > 1) {
                                 newPagePrev = page - 1;
