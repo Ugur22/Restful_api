@@ -24,11 +24,11 @@ var quoteController = function (Quote) {
             res.status(201).send(quote);
         }
 
-
     };
 
     var options = function (req, res) {
         res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+        res.header('Access-Control-Allow-Origin', '*');
         res.end();
     };
     var get = function (req, res, next) {
