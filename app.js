@@ -9,17 +9,13 @@ var Quote = require('./models/quotesModel');
 
 
 var app = express();
+var cors = require('cors');
 var port = process.env.PORT || 8000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(function (res, req, next) {
-    res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+app.use(cors());
 
 quoteRouter = require("./Routes/quoteRoutes")(Quote);
 
