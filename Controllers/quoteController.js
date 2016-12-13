@@ -1,6 +1,6 @@
 require('mongoose-pagination');
 var quoteController = function (Quote) {
-    var newPageNext, newPagePrev;
+    var newPageNext, newPagePrev, lastPage = 0;
 
     var post = function (req, res) {
         var quote = new Quote(req.body);
@@ -53,6 +53,7 @@ var quoteController = function (Quote) {
                             limit = countItems;
 
                         var totalPages = Math.ceil(countItems / limit);
+
                     }
 
                     if (err) {
@@ -66,6 +67,12 @@ var quoteController = function (Quote) {
                             if (totalPages <= 1) {
                                 newPagePrev = 1;
                                 newPageNext = 1;
+                            }
+
+                            if (countItems < 1) {
+                                newPagePrev = 1;
+                                newPageNext = 1;
+                                totalPages = 1;
                             }
 
                             if (page < totalPages) {
