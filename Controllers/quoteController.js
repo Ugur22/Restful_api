@@ -183,11 +183,11 @@ var quoteController = function (Quote) {
     };
 
     var deleteQuote = function (req, res) {
-        req.quote.remove(function (err) {
+        req.quote.remove(function (err, result) {
             if (err) {
                 res.status(500).send(err);
             } else {
-                res.status(204).send('Removed');
+                res.json(result);
             }
         });
     };
