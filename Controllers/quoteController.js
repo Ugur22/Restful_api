@@ -28,6 +28,7 @@ var quoteController = function (Quote) {
 
     var options = function (req, res) {
         res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+        res.header('Allow', 'POST, GET, OPTIONS');
         res.header('Access-Control-Allow-Origin', '*');
         res.end();
     };
@@ -140,6 +141,7 @@ var quoteController = function (Quote) {
 
     var singleQuoteOptions = function (req, res) {
         res.header('Access-Control-Allow-Methods', 'GET, PUT, DELETE, OPTIONS');
+        res.header('Allow', 'GET, PUT, DELETE, OPTIONS');
         res.end();
     };
 
